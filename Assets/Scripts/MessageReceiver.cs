@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class MessageReceiver : MonoBehaviour
 {
-    public void UDPMessage(string message)
+    public UDPClient client;
+    public void UDPMessageSend()
     {
-        Debug.Log(message);
+        client.SendValue("end");
     }
 }

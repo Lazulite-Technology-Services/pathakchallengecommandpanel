@@ -80,6 +80,13 @@ public class UIManager : MonoBehaviour
             {
                 playerDetails = string.Empty;
 
+                player_1_Name.text = string.Empty;
+                player_1_Mobile.text = string.Empty;
+                player_1_Email.text = string.Empty;
+                player_2_Name.text = string.Empty;
+                player_2_Email.text = string.Empty;
+                player_2_Mobile.text = string.Empty;
+
                 Player_1_UI_Object.SetActive(true);
                 Player_2_UI_Object.SetActive(false);
 
@@ -88,12 +95,7 @@ public class UIManager : MonoBehaviour
 
                 loadingObject.SetActive(false);
 
-                player_1_Name.text = string.Empty;
-                player_1_Mobile.text = string.Empty;
-                player_1_Email.text = string.Empty;
-                player_2_Email.text = string.Empty;
-                player_2_Email.text = string.Empty;
-                player_2_Email.text = string.Empty;
+                
             }
         });
     }
