@@ -139,7 +139,8 @@ public class UDPClient : MonoBehaviour
 		{
 			try {
 				// Bytes received
-				IPEndPoint anyIP = new IPEndPoint (IPAddress.Any, 0);
+				//IPEndPoint anyIP = new IPEndPoint (IPAddress.Any, 0);
+				IPEndPoint anyIP = new IPEndPoint (IPAddress.Any, portListen);
 				byte[] data = client.Receive (ref anyIP);
 
 				// Bytes into text

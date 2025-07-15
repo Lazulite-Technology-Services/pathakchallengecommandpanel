@@ -67,7 +67,7 @@ public class UIManager : MonoBehaviour
         playerDetails = $"p1/{player_1_Name.text}/{player_1_Mobile.text}/{player_1_Email.text}/-p2/{player_2_Name.text}/{player_2_Mobile.text}/{player_2_Email.text}";
         loadingObject.SetActive(true);
 
-        udpClient.SendValue("playerDetails");
+        udpClient.SendValue(playerDetails);
     }
 
     public void ResetApp(string msg)
@@ -76,7 +76,7 @@ public class UIManager : MonoBehaviour
         {
             Debug.Log($"received msg : {msg}");
 
-            if (msg == "gameend")
+            if (msg == "end")
             {
                 playerDetails = string.Empty;
 
