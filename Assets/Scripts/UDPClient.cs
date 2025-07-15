@@ -51,6 +51,9 @@ public class UDPClient : MonoBehaviour
         if (PlayerPrefs.HasKey("ip"))
         {
             ipSend = PlayerPrefs.GetString("ip");
+            portListen = int.Parse(PlayerPrefs.GetString("listern"));
+            portSend = int.Parse(PlayerPrefs.GetString("sendport"));
+
             Debug.Log($"ip is present : {ipSend}");
 
             if (IPAddress.TryParse(ipSend, out ip))
@@ -66,10 +69,12 @@ public class UDPClient : MonoBehaviour
 
             }
 
-            //Initialize client and thread for receiving
+			//Initialize client and thread for receiving
+
+			if (client != null)
+				client.Close();
 
             client = new UdpClient(portListen);
-
 
             receiveThread = new Thread(new ThreadStart(ReceiveData));
             receiveThread.IsBackground = true;
@@ -128,9 +133,10 @@ public class UDPClient : MonoBehaviour
 
 	//This method checks if the app receives any message
 	public void ReceiveData ()
-	{
+	{		
  
-		while (true) {
+		while (true) 
+		{
 			try {
 				// Bytes received
 				IPEndPoint anyIP = new IPEndPoint (IPAddress.Any, 0);
@@ -139,15 +145,15 @@ public class UDPClient : MonoBehaviour
 				// Bytes into text
 				string text = "";
 				text = Encoding.UTF8.GetString (data);
-	
-                received = text;
 
-				
+                Debug.Log(received);
+
+                received = text;				
 
 				UnityMainThreadDispatcher.Instance().EnqueueAsync(() =>
 				{
                     errorMsg.text = text;
-                    UIManager.MessageReceived?.Invoke();
+                    UIManager.MessageReceived?.Invoke(text);
 				});
                 
 
@@ -155,7 +161,10 @@ public class UDPClient : MonoBehaviour
 				Debug.Log ("Error:" + err.ToString ());
 			}
 		}
-	}
+
+		
+
+    }
 		
 	//Exit UDP client
 	public void OnDisaudp ()

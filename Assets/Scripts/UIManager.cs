@@ -24,8 +24,10 @@ public class UIManager : MonoBehaviour
 
     private string playerDetails = string.Empty;
 
-    public static Action MessageReceived;
+    public static Action<string> MessageReceived;
     public static Action StartConnection;
+
+    public TextMeshProUGUI StatusText;
 
     private void Awake()
     {
@@ -42,6 +44,13 @@ public class UIManager : MonoBehaviour
         saveIp.onClick.AddListener(SaveIPAddress);
 
         MessageReceived += ResetApp;
+
+        if (PlayerPrefs.HasKey("ip"))
+        {
+            ipAddress.text = PlayerPrefs.GetString("ip");
+            listernPort.text = PlayerPrefs.GetString("listern");
+            portSend.text = PlayerPrefs.GetString("sendport");
+        }
     }
 
     private void NextPage()
@@ -58,29 +67,34 @@ public class UIManager : MonoBehaviour
         playerDetails = $"p1/{player_1_Name.text}/{player_1_Mobile.text}/{player_1_Email.text}/-p2/{player_2_Name.text}/{player_2_Mobile.text}/{player_2_Email.text}";
         loadingObject.SetActive(true);
 
-        udpClient.SendValue("game start" + playerDetails);
+        udpClient.SendValue("playerDetails");
     }
 
-    public void ResetApp()
+    public void ResetApp(string msg)
     {
         UnityMainThreadDispatcher.Instance().EnqueueAsync(() =>
         {
-            playerDetails = string.Empty;
+            Debug.Log($"received msg : {msg}");
 
-            Player_1_UI_Object.SetActive(true);
-            Player_2_UI_Object.SetActive(false);
+            if (msg == "gameend")
+            {
+                playerDetails = string.Empty;
 
-            next_Btn.gameObject.SetActive(true);
-            submit_Btn.gameObject.SetActive(false);
+                Player_1_UI_Object.SetActive(true);
+                Player_2_UI_Object.SetActive(false);
 
-            loadingObject.SetActive(false);
+                next_Btn.gameObject.SetActive(true);
+                submit_Btn.gameObject.SetActive(false);
 
-            player_1_Name.text = string.Empty;
-            player_1_Mobile.text = string.Empty;
-            player_1_Email.text = string.Empty;
-            player_2_Email.text = string.Empty;
-            player_2_Email.text = string.Empty;
-            player_2_Email.text = string.Empty;
+                loadingObject.SetActive(false);
+
+                player_1_Name.text = string.Empty;
+                player_1_Mobile.text = string.Empty;
+                player_1_Email.text = string.Empty;
+                player_2_Email.text = string.Empty;
+                player_2_Email.text = string.Empty;
+                player_2_Email.text = string.Empty;
+            }
         });
     }
 
@@ -102,6 +116,7 @@ public class UIManager : MonoBehaviour
         if(commandPanel.activeSelf)
         {
             commandPanel.SetActive(false);
+
             if (PlayerPrefs.HasKey("ip"))
             {
                 ipAddress.text = PlayerPrefs.GetString("ip");
@@ -109,19 +124,26 @@ public class UIManager : MonoBehaviour
                 portSend.text = PlayerPrefs.GetString("sendport");
             }
 
-            commandPanel.SetActive(true);
+            //commandPanel.SetActive(true);
 
 
             if (udpClient.client != null)
             {
                 Debug.Log("The client is not null");
                 udpClient.client.Close();
+                
             }
             else
             {
                 Debug.Log("The client is null !!!!!!");
-                StartConnection();
+                //StartConnection();
             }
+
+            StartConnection();
+        }
+        else
+        {
+            commandPanel.SetActive(true);
         }
         /*else
         {
