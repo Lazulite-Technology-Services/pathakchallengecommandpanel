@@ -10,9 +10,9 @@ using TMPro;
 
 public class UDPClient : MonoBehaviour
 {		
-	public int portListen = 4444;
+	public int portListen = 6000;
 	public string ipSend = "";
-	public int portSend = 5555;
+	public int portSend = 6000;
 
 	public GameObject[]  notifyObjects;
 	public string messageToNotify;
@@ -46,13 +46,15 @@ public class UDPClient : MonoBehaviour
 	{		
         IPAddress ip;
 
-        //PlayerPrefs.DeleteAll();
+        PlayerPrefs.DeleteAll();
 
         if (PlayerPrefs.HasKey("ip"))
         {
             ipSend = PlayerPrefs.GetString("ip");
-            portListen = int.Parse(PlayerPrefs.GetString("listern"));
-            portSend = int.Parse(PlayerPrefs.GetString("sendport"));
+			//portListen = int.Parse(PlayerPrefs.GetString("listern"));
+			//portSend = int.Parse(PlayerPrefs.GetString("sendport"));
+
+			//portListen = 6000;
 
             Debug.Log($"ip is present : {ipSend}");
 

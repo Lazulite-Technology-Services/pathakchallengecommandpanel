@@ -60,15 +60,50 @@ public class UIManager : MonoBehaviour
 
         next_Btn.gameObject.SetActive(false);
         submit_Btn.gameObject.SetActive(true);
+
+        if(player_1_Name.text == "")
+        {
+            player_1_Name.text = "na";
+        }
+
+        if (player_1_Mobile.text == "")
+        {
+            player_1_Mobile.text = "na";
+        }
+
+        if (player_1_Email.text == "")
+        {
+            player_1_Email.text = "na";
+        }
     }
 
     private void Submit()
     {
+        if (player_2_Name.text == "")
+        {
+            player_2_Name.text = "na";
+        }
+
+        if (player_2_Mobile.text == "")
+        {
+            player_2_Mobile.text = "na";
+        }
+
+        if (player_2_Email.text == "")
+        {
+            player_2_Email.text = "na";
+        }
+
+
         playerDetails = $"p1/{player_1_Name.text}/{player_1_Mobile.text}/{player_1_Email.text}/-p2/{player_2_Name.text}/{player_2_Mobile.text}/{player_2_Email.text}";
         loadingObject.SetActive(true);
 
+        //playerdts = playerDetails;
+
         udpClient.SendValue(playerDetails);
     }
+
+    //public string playerdts;
 
     public void ResetApp(string msg)
     {
@@ -102,12 +137,12 @@ public class UIManager : MonoBehaviour
 
     private void SaveIPAddress()
     {
-        udpClient.portListen = int.Parse(listernPort.text);
-        udpClient.portSend = int.Parse(portSend.text);
+        //udpClient.portListen = int.Parse(listernPort.text);
+        //udpClient.portSend = int.Parse(portSend.text);
 
         PlayerPrefs.SetString("ip", ipAddress.text);
-        PlayerPrefs.SetString("listern", listernPort.text);
-        PlayerPrefs.SetString("sendport", portSend.text);
+        //PlayerPrefs.SetString("listern", listernPort.text);
+        //PlayerPrefs.SetString("sendport", portSend.text);
 
         
         EnableDisableCommandPanel();

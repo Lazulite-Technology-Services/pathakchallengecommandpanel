@@ -149,8 +149,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portListen: 6000
-  ipSend: 192.168.0.121
-  portSend: 7000
+  ipSend: 192.168.70.129
+  portSend: 6000
   notifyObjects: []
   messageToNotify: 
   errorMsg: {fileID: 2059047753}
